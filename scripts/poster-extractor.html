@@ -1,0 +1,26 @@
+<!doctype html>
+<html><body>
+<pre id="out">pending</pre>
+<script>
+// Extracts a poster frame + metadata for each video. Used by scripts/make-posters.mjs via headless Chrome.
+const files = (new URLSearchParams(location.search).get('v') || '').split(',');
+const t = parseFloat(new URLSearchParams(location.search).get('t') || '1.2');
+const results = [];
+(async () => {
+  for (const f of files) {
+    const v = document.createElement('video');
+    v.muted = true; v.preload = 'auto'; v.src = f;
+    await new Promise((res, rej) => { v.onloadedmetadata = res; v.onerror = () => rej(new Error('load ' + f)); });
+    v.currentTime = Math.min(t, v.duration / 2);
+    await new Promise((res) => { v.onseeked = res; });
+    const c = document.createElement('canvas');
+    const s = Math.min(1, 900 / Math.max(v.videoWidth, v.videoHeight));
+    c.width = Math.round(v.videoWidth * s); c.height = Math.round(v.videoHeight * s);
+    c.getContext('2d').drawImage(v, 0, 0, c.width, c.height);
+    results.push({ file: f, width: v.videoWidth, height: v.videoHeight, duration: v.duration, poster: c.toDataURL('image/jpeg', 0.82) });
+  }
+  document.getElementById('out').textContent = 'RESULT' + JSON.stringify(results) + 'END';
+})().catch(e => { document.getElementById('out').textContent = 'ERROR ' + e.message; });
+</script>
+</body></html>
+
