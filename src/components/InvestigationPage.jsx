@@ -168,6 +168,19 @@ export const InvestigationPage = ({ object, onBack }) => {
           max-width: 440px;
           margin-bottom: 20px;
           position: relative;
+          padding-bottom: 52px;
+        }
+
+        .inv-polaroid-caption {
+          position: absolute;
+          bottom: 12px;
+          left: 12px;
+          right: 12px;
+          text-align: center;
+          font-family: var(--font-script);
+          font-size: 1.45rem;
+          color: var(--color-deep-rose);
+          line-height: 1.25;
         }
 
         .inv-card-bow-decor {
