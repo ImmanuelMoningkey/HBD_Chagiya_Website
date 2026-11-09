@@ -169,13 +169,12 @@ export const BirthdayModal = ({ giftData, isOpen, onClose }) => {
           width: 100%;
           max-width: 320px;
           margin-bottom: 24px;
-          padding-bottom: 54px;
         }
 
         .modal-polaroid-frame .polaroid-caption {
-          bottom: 14px;
           font-size: 1.55rem;
           color: var(--color-deep-rose);
+          margin-top: 12px;
         }
 
         .modal-photo-wrapper {
